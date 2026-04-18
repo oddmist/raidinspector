@@ -2,7 +2,7 @@
 ## Title: Teräs Raid Inspector
 ## Notes: Inspect all raid members for missing enchants and gems
 ## Author: Oddmist
-## Version: 1.0.0
+## Version: 1.0.1
 ## SavedVariables: RaidInspectorDB
 
 Locales.lua
