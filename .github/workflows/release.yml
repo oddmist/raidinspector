@@ -29,16 +29,16 @@ jobs:
         run: |
           sed -i "s/^## Version: .*/## Version: ${{ steps.version.outputs.version }}/" RaidInspector.toc
 
-      - name: Commit version bump to main
+      - name: Commit version bump to master
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout main
+          git checkout master
           git checkout "${{ steps.version.outputs.tag }}" -- RaidInspector.toc
           sed -i "s/^## Version: .*/## Version: ${{ steps.version.outputs.version }}/" RaidInspector.toc
           git add RaidInspector.toc
           git diff --cached --quiet || git commit -m "Update TOC version to ${{ steps.version.outputs.version }}"
-          git push origin main
+          git push origin master
 
       - name: Build release zip
         run: |
