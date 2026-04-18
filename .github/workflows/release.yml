@@ -1,47 +1,63 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Update TOC version
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          # Strip leading 'v' if present (v1.0.0 -> 1.0.0)
-          VERSION="${TAG#v}"
-          sed -i "s/^## Version: .*/## Version: ${VERSION}/" RaidInspector.toc
+          sed -i "s/^## Version: .*/## Version: ${{ steps.version.outputs.version }}/" RaidInspector.toc
+
+      - name: Commit version bump to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git checkout "${{ steps.version.outputs.tag }}" -- RaidInspector.toc
+          sed -i "s/^## Version: .*/## Version: ${{ steps.version.outputs.version }}/" RaidInspector.toc
+          git add RaidInspector.toc
+          git diff --cached --quiet || git commit -m "Update TOC version to ${{ steps.version.outputs.version }}"
+          git push origin main
 
       - name: Build release zip
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          VERSION="${TAG#v}"
+          git checkout "${{ steps.version.outputs.tag }}"
+          sed -i "s/^## Version: .*/## Version: ${{ steps.version.outputs.version }}/" RaidInspector.toc
 
-          # Create a staging directory with the correct folder name
           mkdir -p staging/RaidInspector
-
-          # Copy addon files (exclude .github, .git, docs)
           cp *.lua staging/RaidInspector/
           cp *.toc staging/RaidInspector/
           cp README.md staging/RaidInspector/
 
-          # Build the zip
           cd staging
-          zip -r "../RaidInspector-${VERSION}.zip" RaidInspector/
+          zip -r "../RaidInspector-${{ steps.version.outputs.version }}.zip" RaidInspector/
 
-      - name: Upload release asset
+      - name: Create release and upload
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          VERSION="${TAG#v}"
-          gh release upload "${TAG}" "RaidInspector-${VERSION}.zip" --clobber
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --generate-notes \
+            --title "${{ steps.version.outputs.tag }}" \
+            "RaidInspector-${{ steps.version.outputs.version }}.zip"
