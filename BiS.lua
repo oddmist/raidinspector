@@ -51,6 +51,10 @@ local ENC = {
     POWER_OF_THE_SCOURGE    = 2721,  -- +15 spell dmg / +14 spell crit (caster)
     RESILIENCE_OF_THE_SCOURGE = 2715, -- +31 healing / +5 mp5 (healer)
     FORTITUDE_OF_THE_SCOURGE = 2716,  -- +16 dodge / +100 armor (tank)
+    -- Shoulder (Zul'Gurub — Zandalar Signets)
+    SIGNET_SERENITY         = 2604,  -- +33 healing / +11 spell dmg (healer)
+    SIGNET_MOJO             = 2605,  -- +18 spell dmg (caster dps)
+    SIGNET_MIGHT            = 2606,  -- +30 AP (phys dps)
 
     -- Chest
     ENCHANT_CHEST_EXCEPTIONAL_STATS  = 2661,  -- +6 all stats
@@ -121,6 +125,9 @@ local ENC = {
     ENCHANT_WEAPON_GREATER_AGILITY  = 3222,  -- +20 agi
     ENCHANT_WEAPON_POTENCY          = 2668,  -- +20 str
     ENCHANT_WEAPON_MAJOR_HEALING    = 2343,  -- +81 healing / +27 spell dmg
+    ENCHANT_WEAPON_HEALING_POWER    = 2505,  -- +55 healing / +19 spell dmg (vanilla MC)
+    ENCHANT_WEAPON_SPELL_POWER_30   = 2504,  -- +30 spell damage (vanilla)
+    ENCHANT_WEAPON_MIGHTY_SPIRIT    = 2567,  -- +20 spirit (vanilla)
     ENCHANT_WEAPON_EXECUTIONER      = 3225,  -- ignore 840 armor proc (Sunwell patch)
     -- Two-Handed weapons
     ENCHANT_2H_SAVAGERY             = 2667,  -- +70 AP (2H only)
@@ -234,7 +241,7 @@ B.ENCHANTS = {}
 B.ENCHANTS["WARRIOR"] = {
     [1] = { -- Arms (often uses 2H weapons)
         [1]  = { ids={ENC.ARCANUM_FEROCITY},                          name="Arcanum of Ferocity" },
-        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Surefooted / Cat's Swiftness / Dexterity" },
@@ -245,7 +252,7 @@ B.ENCHANTS["WARRIOR"] = {
     },
     [2] = { -- Fury (dual wield)
         [1]  = { ids={ENC.ARCANUM_FEROCITY},                          name="Arcanum of Ferocity" },
-        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Surefooted / Cat's Swiftness / Dexterity" },
@@ -257,7 +264,7 @@ B.ENCHANTS["WARRIOR"] = {
     },
     [3] = { -- Protection
         [1]  = { ids={ENC.ARCANUM_PROTECTION},                        name="Arcanum of the Protector" },
-        [3]  = { ids={ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.FORTITUDE_OF_THE_SCOURGE}, name="Inscription of Warding / Knight / Fortitude of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.FORTITUDE_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Warding / Knight / Fortitude of the Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS, ENC.ENCHANT_CHEST_EXCEPTIONAL_HEALTH}, name="+6 Stats / +150 Health" },
         [7]  = { ids={ENC.NETHERCLEFT_LEG_ARMOR, ENC.CLEFTHIDE_LEG_ARMOR, ENC.NETHERCOBRA_LEG_ARMOR}, name="Nethercleft / Clefthide / Nethercobra" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED, ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Fortitude / Boar's Speed / Surefooted" },
@@ -274,19 +281,19 @@ B.ENCHANTS["WARRIOR"] = {
 B.ENCHANTS["PALADIN"] = {
     [1] = { -- Holy
         [1]  = { ids={ENC.ARCANUM_RENEWAL},                           name="Arcanum of Renewal" },
-        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE}, name="Inscription of Faith / Oracle / Resilience of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE, ENC.SIGNET_SERENITY}, name="Inscription of Faith / Oracle / Resilience of the Scourge / Signet of Serenity" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.GOLDEN_SPELLTHREAD, ENC.SILVER_SPELLTHREAD}, name="Golden / Silver Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / +35 Healing / Blasting" },
         [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
-        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT}, name="Major Healing / Spellsurge / SP / Intellect" },
+        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
         [17] = { ids={ENC.ENCHANT_SHIELD_INTELLECT, ENC.ENCHANT_SHIELD_MAJOR_STAMINA}, name="Intellect / Major Stamina (Shield)" },
     },
     [2] = { -- Protection (prot paladins use SP for threat — spell enchants are valid)
         [1]  = { ids={ENC.ARCANUM_PROTECTION, ENC.ARCANUM_POWER},     name="Arcanum of Protector / Power" },
-        [3]  = { ids={ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.GREATER_INS_DISCIPLINE, ENC.GREATER_INS_ORBS, ENC.INS_DISCIPLINE, ENC.INS_ORBS, ENC.FORTITUDE_OF_THE_SCOURGE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Warding / Discipline / Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.GREATER_INS_DISCIPLINE, ENC.GREATER_INS_ORBS, ENC.INS_DISCIPLINE, ENC.INS_ORBS, ENC.FORTITUDE_OF_THE_SCOURGE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Warding / Discipline / Scourge / Signet of Mojo" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS, ENC.ENCHANT_CHEST_EXCEPTIONAL_HEALTH}, name="+6 Stats / +150 Health" },
         [7]  = { ids={ENC.NETHERCLEFT_LEG_ARMOR, ENC.CLEFTHIDE_LEG_ARMOR, ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD}, name="Nethercleft / Clefthide / Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED, ENC.ENCHANT_BOOTS_SUREFOOTED}, name="Fortitude / Boar's Speed / Surefooted" },
@@ -298,7 +305,7 @@ B.ENCHANTS["PALADIN"] = {
     },
     [3] = { -- Retribution (2H weapon — some ret paladins use SP for Seal threat)
         [1]  = { ids={ENC.ARCANUM_FEROCITY},                          name="Arcanum of Ferocity" },
-        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Surefooted / Cat's Swiftness / Dexterity" },
@@ -314,7 +321,7 @@ B.ENCHANTS["PALADIN"] = {
 -- All hunter specs share similar gear enchants
 local hunterEnchants = {
     [1]  = { ids={ENC.ARCANUM_FEROCITY},                              name="Arcanum of Ferocity" },
-    [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_DEXTERITY, ENC.ENCHANT_BOOTS_CATS_SWIFTNESS}, name="Surefooted / Dexterity / Cat's Swiftness" },
@@ -330,7 +337,7 @@ B.ENCHANTS["HUNTER"] = { [1]=hunterEnchants, [2]=hunterEnchants, [3]=hunterEncha
 -- Tab 1=Assassination, Tab 2=Combat, Tab 3=Subtlety
 local rogueEnchants = {
     [1]  = { ids={ENC.ARCANUM_FEROCITY},                              name="Arcanum of Ferocity" },
-    [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Cat's Swiftness / Surefooted / Dexterity" },
@@ -346,18 +353,18 @@ B.ENCHANTS["ROGUE"] = { [1]=rogueEnchants, [2]=rogueEnchants, [3]=rogueEnchants 
 -- Tab 1=Discipline, Tab 2=Holy, Tab 3=Shadow
 local priestHealEnchants = {
     [1]  = { ids={ENC.ARCANUM_RENEWAL},                               name="Arcanum of Renewal" },
-    [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE}, name="Inscription of Faith / Oracle / Resilience of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE, ENC.SIGNET_SERENITY}, name="Inscription of Faith / Oracle / Resilience of the Scourge / Signet of Serenity" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.GOLDEN_SPELLTHREAD, ENC.SILVER_SPELLTHREAD},    name="Golden / Silver Spellthread" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
     [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
     [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
     [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
-    [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT}, name="Major Healing / Spellsurge / SP / Intellect" },
+    [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
 }
 local priestDpsEnchants = {
     [1]  = { ids={ENC.ARCANUM_POWER},                                 name="Arcanum of Power" },
-    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Orbs / Discipline / Power of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Orbs / Discipline / Power of the Scourge / Signet of Mojo" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD},     name="Runic / Mystic Spellthread" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
@@ -373,7 +380,7 @@ B.ENCHANTS["PRIEST"] = { [1]=priestHealEnchants, [2]=priestHealEnchants, [3]=pri
 B.ENCHANTS["SHAMAN"] = {
     [1] = { -- Elemental
         [1]  = { ids={ENC.ARCANUM_POWER},                             name="Arcanum of Power" },
-        [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Orbs / Discipline / Power of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Orbs / Discipline / Power of the Scourge / Signet of Mojo" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD}, name="Runic / Mystic Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
@@ -385,7 +392,7 @@ B.ENCHANTS["SHAMAN"] = {
     },
     [2] = { -- Enhancement (dual wield — some use SP for burst/shocks)
         [1]  = { ids={ENC.ARCANUM_FEROCITY},                          name="Arcanum of Ferocity" },
-        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Might of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.MIGHT_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Might of the Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR}, name="Nethercobra / Cobrahide Leg Armor" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_DEXTERITY}, name="Surefooted / Cat's Swiftness / Dexterity" },
@@ -397,14 +404,14 @@ B.ENCHANTS["SHAMAN"] = {
     },
     [3] = { -- Restoration
         [1]  = { ids={ENC.ARCANUM_RENEWAL},                           name="Arcanum of Renewal" },
-        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE}, name="Inscription of Faith / Oracle / Resilience of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE, ENC.SIGNET_SERENITY}, name="Inscription of Faith / Oracle / Resilience of the Scourge / Signet of Serenity" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.GOLDEN_SPELLTHREAD, ENC.SILVER_SPELLTHREAD}, name="Golden / Silver Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
         [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
-        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT}, name="Major Healing / Spellsurge / SP / Intellect" },
+        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
         [17] = { ids={ENC.ENCHANT_SHIELD_INTELLECT, ENC.ENCHANT_SHIELD_MAJOR_STAMINA}, name="Intellect / Major Stamina (Shield)" },
     },
 }
@@ -413,7 +420,7 @@ B.ENCHANTS["SHAMAN"] = {
 -- Tab 1=Arcane, Tab 2=Fire, Tab 3=Frost
 local mageEnchants = {
     [1]  = { ids={ENC.ARCANUM_POWER},                                 name="Arcanum of Power" },
-    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Orbs / Discipline / Power of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Orbs / Discipline / Power of the Scourge / Signet of Mojo" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD},     name="Runic / Mystic Spellthread" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
@@ -428,7 +435,7 @@ B.ENCHANTS["MAGE"] = { [1]=mageEnchants, [2]=mageEnchants, [3]=mageEnchants }
 -- Tab 1=Affliction, Tab 2=Demonology, Tab 3=Destruction
 local warlockEnchants = {
     [1]  = { ids={ENC.ARCANUM_POWER},                                 name="Arcanum of Power" },
-    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Orbs / Discipline / Power of the Scourge" },
+    [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Orbs / Discipline / Power of the Scourge / Signet of Mojo" },
     [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},               name="+6 All Stats" },
     [7]  = { ids={ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD},     name="Runic / Mystic Spellthread" },
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
@@ -444,7 +451,7 @@ B.ENCHANTS["WARLOCK"] = { [1]=warlockEnchants, [2]=warlockEnchants, [3]=warlockE
 B.ENCHANTS["DRUID"] = {
     [1] = { -- Balance
         [1]  = { ids={ENC.ARCANUM_POWER},                             name="Arcanum of Power" },
-        [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE}, name="Inscription of Orbs / Discipline / Power of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_ORBS, ENC.GREATER_INS_DISCIPLINE, ENC.INS_ORBS, ENC.INS_DISCIPLINE, ENC.POWER_OF_THE_SCOURGE, ENC.SIGNET_MOJO}, name="Inscription of Orbs / Discipline / Power of the Scourge / Signet of Mojo" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.RUNIC_SPELLTHREAD, ENC.MYSTIC_SPELLTHREAD}, name="Runic / Mystic Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
@@ -455,7 +462,7 @@ B.ENCHANTS["DRUID"] = {
     },
     [2] = { -- Feral Combat (Cat/Bear — uses 2H staff/mace)
         [1]  = { ids={ENC.ARCANUM_FEROCITY, ENC.ARCANUM_PROTECTION},  name="Arcanum of Ferocity / Protector" },
-        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.MIGHT_OF_THE_SCOURGE, ENC.FORTITUDE_OF_THE_SCOURGE}, name="Inscription of Vengeance / Blade / Warding / Knight / Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_VENGEANCE, ENC.GREATER_INS_BLADE, ENC.GREATER_INS_WARDING, ENC.GREATER_INS_KNIGHT, ENC.INS_VENGEANCE, ENC.INS_BLADE, ENC.INS_WARDING, ENC.INS_KNIGHT, ENC.MIGHT_OF_THE_SCOURGE, ENC.FORTITUDE_OF_THE_SCOURGE, ENC.SIGNET_MIGHT}, name="Inscription of Vengeance / Blade / Warding / Knight / Scourge / Signet of Might" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS, ENC.ENCHANT_CHEST_EXCEPTIONAL_HEALTH}, name="+6 All Stats / +150 Health" },
         [7]  = { ids={ENC.NETHERCOBRA_LEG_ARMOR, ENC.COBRAHIDE_LEG_ARMOR, ENC.NETHERCLEFT_LEG_ARMOR, ENC.CLEFTHIDE_LEG_ARMOR}, name="Nethercobra / Nethercleft Leg Armor" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_CATS_SWIFTNESS, ENC.ENCHANT_BOOTS_SUREFOOTED, ENC.ENCHANT_BOOTS_DEXTERITY, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Cat's Swiftness / Surefooted / Dexterity / Boar's Speed" },
@@ -466,14 +473,14 @@ B.ENCHANTS["DRUID"] = {
     },
     [3] = { -- Restoration
         [1]  = { ids={ENC.ARCANUM_RENEWAL},                           name="Arcanum of Renewal" },
-        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE}, name="Inscription of Faith / Oracle / Resilience of the Scourge" },
+        [3]  = { ids={ENC.GREATER_INS_FAITH, ENC.GREATER_INS_ORACLE, ENC.INS_FAITH, ENC.INS_ORACLE, ENC.RESILIENCE_OF_THE_SCOURGE, ENC.SIGNET_SERENITY}, name="Inscription of Faith / Oracle / Resilience of the Scourge / Signet of Serenity" },
         [5]  = { ids={ENC.ENCHANT_CHEST_EXCEPTIONAL_STATS},           name="+6 All Stats" },
         [7]  = { ids={ENC.GOLDEN_SPELLTHREAD, ENC.SILVER_SPELLTHREAD}, name="Golden / Silver Spellthread" },
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
         [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
-        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT}, name="Major Healing / Spellsurge / SP / Intellect" },
+        [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
     },
 }
 
@@ -1042,6 +1049,10 @@ B.ENCHANT_NAMES = {
     [2721] = "Power of the Scourge",
     [2715] = "Resilience of the Scourge",
     [2716] = "Fortitude of the Scourge",
+    -- Shoulder (Zul'Gurub — Zandalar Signets)
+    [2604] = "Zandalar Signet of Serenity",
+    [2605] = "Zandalar Signet of Mojo",
+    [2606] = "Zandalar Signet of Might",
     -- Shoulder (Violet Eye)
     [2998] = "Inscription of Endurance",
 
@@ -1073,7 +1084,6 @@ B.ENCHANT_NAMES = {
     [2649] = "+12 Stamina",
     [2658] = "Surefooted",
     [2656] = "Vitality",
-    [2656] = "Vitality",
     [851]  = "+7 Stamina",
     [911]  = "Minor Speed",
     [2544] = "+7 Agility",
@@ -1102,7 +1112,6 @@ B.ENCHANT_NAMES = {
     [2614] = "+15 Hit Rating",
     [2615] = "+15 Agility",
     [930]  = "+7 Attack Power",
-    [2564] = "+15 Agility",
 
     -- Back
     [368]  = "+12 Agility",
@@ -1131,7 +1140,6 @@ B.ENCHANT_NAMES = {
     [3225] = "Executioner",
     [3273] = "Deathfrost",
     [3223] = "Adamantite Weapon Chain",
-    [2564] = "+15 Agility",
     [1897] = "+5 Weapon Damage",
     [963]  = "+7 Weapon Damage",
     [2667] = "+70 Attack Power",
@@ -1139,14 +1147,15 @@ B.ENCHANT_NAMES = {
     [1903] = "Lifestealing",
     [1898] = "Fiery Weapon",
     [1899] = "Icy Chill",
-    [2504] = "+7 Frost Damage",
-    [2505] = "+7 Shadow Damage",
+    [2504] = "+30 Spell Damage (Spell Power)",
+    [2505] = "+55 Healing Power",
     [1894] = "Unholy Weapon",
     [1896] = "Superior Impact",
     [1606] = "Demonslaying",
     [803]  = "Fiery Blaze",
-    [2563] = "+2 Weapon Damage",
+    [2563] = "+15 Strength",
     [2443] = "+3 Agility",
+    [2567] = "+20 Spirit",
     [2568] = "+22 Intellect",
 
     -- Shields
@@ -1203,10 +1212,7 @@ B.ENCHANT_NAMES = {
     [2523] = "+30 Hit Rating",
     [2543] = "+7 Agility",
     [2545] = "+7 Intellect",
-    [2567] = "+12 Agility",
-    [2568] = "+22 Intellect",
     [2603] = "+100 Attack Power vs Undead",
-    [2606] = "+15 Agility",
     [2616] = "+20 Agility",
     [2619] = "+30 Attack Power",
     [2620] = "+15 Spell Damage / +14 Spell Crit",
@@ -1235,10 +1241,7 @@ B.ENCHANT_NAMES = {
     [1903] = "Lifestealing",
     [1904] = "+15 Agility",
     [2523] = "+30 Hit Rating (Scope)",
-    [2563] = "+2 Weapon Damage",
-    [2615] = "+15 Agility",
-    [2616] = "+20 Agility",
-    [2646] = "+12 Stamina (Bracer)",
+    [2646] = "+25 Agility (2H)",
     [2647] = "+12 Strength",
     [2663] = "+18 Spell Damage",
     [2665] = "+12 Resilience (Chest)",
