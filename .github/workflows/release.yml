@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update TOC version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          # Strip leading 'v' if present (v1.0.0 -> 1.0.0)
+          VERSION="${TAG#v}"
+          sed -i "s/^## Version: .*/## Version: ${VERSION}/" RaidInspector.toc
+
+      - name: Build release zip
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+
+          # Create a staging directory with the correct folder name
+          mkdir -p staging/RaidInspector
+
+          # Copy addon files (exclude .github, .git, docs)
+          cp *.lua staging/RaidInspector/
+          cp *.toc staging/RaidInspector/
+          cp README.md staging/RaidInspector/
+
+          # Build the zip
+          cd staging
+          zip -r "../RaidInspector-${VERSION}.zip" RaidInspector/
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          gh release upload "${TAG}" "RaidInspector-${VERSION}.zip" --clobber
