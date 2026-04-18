@@ -214,6 +214,76 @@ function I.InspectTarget()
     NotifyInspect("target")
 end
 
+-- ── Inspect a specific player by name ─────────────────────────────────────────
+-- Finds their unit token in the current group and inspects them.
+
+function I.InspectByName(playerName)
+    if not playerName then
+        print("|cff00ccff[TRI]|r No player specified.")
+        return
+    end
+
+    -- Check self
+    if playerName == UnitName("player") then
+        RaidInspectorData.HarvestSelf()
+        RaidInspector.Fire("SCAN_UPDATED")
+        print("|cff00ccff[TRI]|r Rescanned self.")
+        return
+    end
+
+    -- Find unit token in group
+    local unit = nil
+    if IsInRaid() then
+        for i = 1, GetNumGroupMembers() do
+            local token = "raid" .. i
+            local name = UnitName(token)
+            if name == playerName then
+                unit = token
+                break
+            end
+        end
+    elseif IsInGroup() then
+        for i = 1, GetNumGroupMembers() - 1 do
+            local token = "party" .. i
+            local name = UnitName(token)
+            if name == playerName then
+                unit = token
+                break
+            end
+        end
+    end
+
+    if not unit then
+        print("|cff00ccff[TRI]|r " .. playerName .. " not found in group.")
+        return
+    end
+
+    if not UnitIsConnected(unit) then
+        RaidInspectorData.StoreOffline(playerName, nil)
+        RaidInspector.Fire("SCAN_UPDATED")
+        print("|cff00ccff[TRI]|r " .. playerName .. " is offline.")
+        return
+    end
+
+    I.StopScan()
+
+    queue   = { unit }
+    current = 1
+    isScanning = true
+    lastNotify = GetTime()
+
+    SetTimeout(TIMEOUT_SEC, function()
+        if isScanning and queue[current] == unit then
+            RaidInspectorData.StoreTimeout(playerName, nil)
+            isScanning = false
+            RaidInspector.Fire("SCAN_UPDATED")
+            print("|cff00ccff[TRI]|r Rescan of " .. playerName .. " timed out.")
+        end
+    end)
+
+    NotifyInspect(unit)
+end
+
 -- ── INSPECT_READY handler ─────────────────────────────────────────────────────
 -- Called by RaidInspector.lua's OnEvent dispatch.
 -- Argument: guid of the unit whose inspection data is now available.

@@ -30,12 +30,15 @@ local resetBtn       = nil
 local whisperBtn     = nil
 local announceBtn    = nil
 local editorBtn      = nil
+local targetBtn      = nil
+local rescanBtn      = nil
 local filterCheck    = nil
 local rowFrames      = {}   -- pre-created row frames (pool of VISIBLE_ROWS)
 local rowData        = {}   -- ordered list of {key, record} currently displayed
 
 local filterIssuesOnly = false
 local sweatCheck       = nil
+local selectedKey      = nil  -- player key of the selected row in the main list
 
 -- ── Build main window ─────────────────────────────────────────────────────────
 
@@ -62,7 +65,7 @@ local function BuildMainWindow()
     closeBtn:SetScript("OnClick", function() mainFrame:Hide() end)
 
     -- ── Row 2: Buttons + Progress bar + Filter ───────────────────────────────
-    -- Layout (left to right): [Whisper][Announce][Reset] [progress bar] [Scan/Stop] [Issues Only ☐]
+    -- Layout (left→right): [Whisper][Announce][Reset][Editor][Target][Rescan] [progress bar] [Scan/Stop] [Sweat ☐][Issues Only ☐]
     local row2Y = -32
 
     -- Whisper / Announce (left side)
@@ -87,14 +90,9 @@ local function BuildMainWindow()
     resetBtn:SetPoint("LEFT", announceBtn, "RIGHT", 4, 0)
     resetBtn:SetText(L["RESET"])
     resetBtn:SetScript("OnClick", function()
-        if not IsInGroup() then
-            print("|cff00ccff[TRI]|r " .. L["NOT_IN_GROUP"])
-            return
-        end
         RaidInspectorInspect.StopScan()
         RaidInspectorData.ClearAll()
         RaidInspector.Fire("DATA_CLEARED")
-        RaidInspectorInspect.StartScan()
     end)
 
     editorBtn = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
@@ -103,6 +101,33 @@ local function BuildMainWindow()
     editorBtn:SetText(L["EDITOR"])
     editorBtn:SetScript("OnClick", function()
         RaidInspectorUIEditor.Toggle()
+    end)
+
+    targetBtn = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
+    targetBtn:SetSize(60, 22)
+    targetBtn:SetPoint("LEFT", editorBtn, "RIGHT", 4, 0)
+    targetBtn:SetText(L["TARGET"])
+    targetBtn:SetScript("OnClick", function()
+        RaidInspectorInspect.InspectTarget()
+    end)
+
+    rescanBtn = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
+    rescanBtn:SetSize(60, 22)
+    rescanBtn:SetPoint("LEFT", targetBtn, "RIGHT", 4, 0)
+    rescanBtn:SetText(L["RESCAN"])
+    rescanBtn:SetScript("OnClick", function()
+        -- Prefer detail panel selection, fall back to main list selection
+        local key = RaidInspectorUIDetail.GetCurrentKey() or selectedKey
+        if not key then
+            print("|cff00ccff[TRI]|r No player selected.")
+            return
+        end
+        local record = RaidInspectorData.GetPlayerByKey(key)
+        if not record then
+            print("|cff00ccff[TRI]|r Player data not found.")
+            return
+        end
+        RaidInspectorInspect.InspectByName(record.name)
     end)
 
     -- Filter checkbox (right side)
@@ -154,9 +179,9 @@ local function BuildMainWindow()
         scanBtn:Show()
     end)
 
-    -- Progress bar (fills space between Editor and Scan)
+    -- Progress bar (fills space between Rescan and Scan)
     local barBg = CreateFrame("StatusBar", nil, mainFrame)
-    barBg:SetPoint("LEFT",  editorBtn, "RIGHT", 8, 0)
+    barBg:SetPoint("LEFT",  rescanBtn, "RIGHT", 8, 0)
     barBg:SetPoint("RIGHT", scanBtn,     "LEFT", -8, 0)
     barBg:SetHeight(14)
     barBg:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
@@ -246,14 +271,32 @@ local function BuildMainWindow()
         issueText:SetWidth(220)
         issueText:SetJustifyH("LEFT")
 
+        -- Selection highlight (persistent, not just hover)
+        local sel = row:CreateTexture(nil, "BACKGROUND", nil, 1)
+        sel:SetAllPoints()
+        U.SetSolidColor(sel, 0.3, 0.6, 1.0, 0.15)
+        sel:Hide()
+
         row.dot       = dot
         row.nameText  = nameText
         row.classText = classText
         row.issueText = issueText
+        row.selTex    = sel
         row:Hide()
 
         row:SetScript("OnClick", function()
             if row.playerKey then
+                selectedKey = row.playerKey
+                -- Update selection highlight on all rows
+                for _, r in ipairs(rowFrames) do
+                    if r.selTex then
+                        if r.playerKey == selectedKey then
+                            r.selTex:Show()
+                        else
+                            r.selTex:Hide()
+                        end
+                    end
+                end
                 RaidInspectorUIDetail.ShowPlayer(row.playerKey)
             end
         end)
@@ -354,10 +397,12 @@ function UI.Refresh()
         progressLabel:SetText(string.format(L["SCANNING"], done, total))
         scanBtn:Hide()
         stopBtn:Show()
-        -- Disable broadcast/reset buttons during scan
+        -- Disable buttons during scan
         whisperBtn:Disable()
         announceBtn:Disable()
         resetBtn:Disable()
+        targetBtn:Disable()
+        rescanBtn:Disable()
     else
         local total = RaidInspectorData.PlayerCount()
         if total > 0 then
@@ -369,10 +414,23 @@ function UI.Refresh()
         end
         scanBtn:Show()
         stopBtn:Hide()
-        -- Enable broadcast/reset buttons when not scanning
+        -- Enable buttons when not scanning
         whisperBtn:Enable()
         announceBtn:Enable()
         resetBtn:Enable()
+        targetBtn:Enable()
+        rescanBtn:Enable()
+    end
+
+    -- Update selection highlight
+    for _, r in ipairs(rowFrames) do
+        if r.selTex then
+            if r.playerKey and r.playerKey == selectedKey then
+                r.selTex:Show()
+            else
+                r.selTex:Hide()
+            end
+        end
     end
 end
 
@@ -409,5 +467,6 @@ RaidInspector.On("SCAN_COMPLETE", function()
 end)
 
 RaidInspector.On("DATA_CLEARED", function()
+    selectedKey = nil
     UI.Refresh()
 end)

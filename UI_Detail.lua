@@ -415,6 +415,13 @@ function UD.IsShown()
     return detailFrame and detailFrame:IsShown()
 end
 
+function UD.GetCurrentKey()
+    if detailFrame and detailFrame:IsShown() then
+        return currentKey
+    end
+    return nil
+end
+
 -- Refresh when scan data updates
 RaidInspector.On("SCAN_UPDATED", function()
     if detailFrame and detailFrame:IsShown() and currentKey then
