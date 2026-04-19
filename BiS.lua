@@ -111,6 +111,7 @@ local ENC = {
     -- Back (additional)
     ENCHANT_CLOAK_DODGE             = 2622,  -- +12 dodge rating
     ENCHANT_CLOAK_MAJOR_ARMOR       = 2662,  -- +120 armor
+    ENCHANT_CLOAK_RESISTANCE        = 2664,  -- +7 all resistances
     ENCHANT_CLOAK_STEELWEAVE        = 2648,  -- +12 def rating
 
     -- Main Hand weapons (1H)
@@ -287,7 +288,7 @@ B.ENCHANTS["PALADIN"] = {
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / +35 Healing / Blasting" },
-        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
+        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Subtlety / Major Armor / +7 All Resistances" },
         [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
         [17] = { ids={ENC.ENCHANT_SHIELD_INTELLECT, ENC.ENCHANT_SHIELD_MAJOR_STAMINA}, name="Intellect / Major Stamina (Shield)" },
     },
@@ -359,7 +360,7 @@ local priestHealEnchants = {
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
     [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
     [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
-    [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
+    [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Subtlety / Major Armor / +7 All Resistances" },
     [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
 }
 local priestDpsEnchants = {
@@ -370,7 +371,7 @@ local priestDpsEnchants = {
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
     [9]  = { ids={ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS}, name="+15 Spell Power / Stats" },
     [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_SPELL_STRIKE, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / Spell Strike / Blasting" },
-    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY}, name="Spell Penetration / Subtlety" },
+    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Spell Penetration / Subtlety / +7 All Resistances" },
     [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_SOULFROST}, name="Major Spell Power / Soulfrost" },
 }
 B.ENCHANTS["PRIEST"] = { [1]=priestHealEnchants, [2]=priestHealEnchants, [3]=priestDpsEnchants }
@@ -386,7 +387,7 @@ B.ENCHANTS["SHAMAN"] = {
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS}, name="+15 Spell Power / Stats" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_SPELL_STRIKE, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / Spell Strike / Blasting" },
-        [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY}, name="Spell Penetration / Subtlety" },
+        [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Spell Penetration / Subtlety / +7 All Resistances" },
         [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_SPELLSURGE}, name="Major Spell Power / Spellsurge" },
         [17] = { ids={ENC.ENCHANT_SHIELD_INTELLECT, ENC.ENCHANT_SHIELD_MAJOR_STAMINA}, name="Intellect / Major Stamina (Shield)" },
     },
@@ -410,7 +411,7 @@ B.ENCHANTS["SHAMAN"] = {
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
-        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
+        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Subtlety / Major Armor / +7 All Resistances" },
         [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
         [17] = { ids={ENC.ENCHANT_SHIELD_INTELLECT, ENC.ENCHANT_SHIELD_MAJOR_STAMINA}, name="Intellect / Major Stamina (Shield)" },
     },
@@ -426,7 +427,7 @@ local mageEnchants = {
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
     [9]  = { ids={ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+15 Spell Power / Stats / +12 Intellect" },
     [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_SPELL_STRIKE, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / Spell Strike / Blasting" },
-    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY}, name="Spell Penetration / Subtlety" },
+    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Spell Penetration / Subtlety / +7 All Resistances" },
     [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_SOULFROST, ENC.ENCHANT_WEAPON_SUNFIRE, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_SPELLSURGE}, name="Major Spell Power / Soulfrost / Sunfire" },
 }
 B.ENCHANTS["MAGE"] = { [1]=mageEnchants, [2]=mageEnchants, [3]=mageEnchants }
@@ -441,7 +442,7 @@ local warlockEnchants = {
     [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
     [9]  = { ids={ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS}, name="+15 Spell Power / Stats" },
     [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_SPELL_STRIKE, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / Spell Strike / Blasting" },
-    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY}, name="Spell Penetration / Subtlety" },
+    [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Spell Penetration / Subtlety / +7 All Resistances" },
     [16] = { ids={ENC.ENCHANT_WEAPON_SOULFROST, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_SUNFIRE, ENC.ENCHANT_WEAPON_SPELLSURGE}, name="Soulfrost / Major Spell Power / Sunfire" },
 }
 B.ENCHANTS["WARLOCK"] = { [1]=warlockEnchants, [2]=warlockEnchants, [3]=warlockEnchants }
@@ -457,7 +458,7 @@ B.ENCHANTS["DRUID"] = {
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS}, name="+15 Spell Power / Stats" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_SPELL_STRIKE, ENC.ENCHANT_GLOVES_BLASTING}, name="+20 Spell Power / Spell Strike / Blasting" },
-        [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY}, name="Spell Penetration / Subtlety" },
+        [15] = { ids={ENC.ENCHANT_CLOAK_SPELL_PENETRATION, ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Spell Penetration / Subtlety / +7 All Resistances" },
         [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_SUNFIRE}, name="Major Spell Power / Intellect / Spellsurge / Sunfire" },
     },
     [2] = { -- Feral Combat (Cat/Bear — uses 2H staff/mace)
@@ -479,7 +480,7 @@ B.ENCHANTS["DRUID"] = {
         [8]  = { ids={ENC.ENCHANT_BOOTS_VITALITY, ENC.ENCHANT_BOOTS_FORTITUDE, ENC.ENCHANT_BOOTS_BOARS_SPEED}, name="Vitality / Fortitude / Boar's Speed" },
         [9]  = { ids={ENC.ENCHANT_BRACER_HEALING, ENC.ENCHANT_BRACER_SPELLPOWER, ENC.ENCHANT_BRACER_STATS, ENC.ENCHANT_BRACER_INTELLECT}, name="+30 Healing / +15 SP / Stats / +12 Intellect" },
         [10] = { ids={ENC.ENCHANT_GLOVES_MAJOR_SPELLPOWER, ENC.ENCHANT_GLOVES_MAJOR_HEALING}, name="+20 Spell Power / +35 Healing" },
-        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR}, name="Subtlety / Major Armor" },
+        [15] = { ids={ENC.ENCHANT_CLOAK_SUBTLETY, ENC.ENCHANT_CLOAK_MAJOR_ARMOR, ENC.ENCHANT_CLOAK_RESISTANCE}, name="Subtlety / Major Armor / +7 All Resistances" },
         [16] = { ids={ENC.ENCHANT_WEAPON_MAJOR_HEALING, ENC.ENCHANT_WEAPON_SPELLSURGE, ENC.ENCHANT_WEAPON_MAJOR_SPELLPOWER, ENC.ENCHANT_WEAPON_MAJOR_INTELLECT, ENC.ENCHANT_WEAPON_HEALING_POWER, ENC.ENCHANT_WEAPON_MIGHTY_SPIRIT}, name="Major Healing / Spellsurge / SP / Intellect / +55 Healing / +20 Spirit" },
     },
 }
@@ -1109,8 +1110,8 @@ B.ENCHANT_NAMES = {
     [2934] = "+10 Spell Crit Rating",
     [2322] = "+35 Healing",
     [3260] = "+240 Armor",
-    [2614] = "+15 Hit Rating",
-    [2615] = "+15 Agility",
+    [2614] = "+20 Shadow Spell Damage",
+    [2615] = "+20 Frost Spell Damage",
     [930]  = "+7 Attack Power",
 
     -- Back
@@ -1118,7 +1119,6 @@ B.ENCHANT_NAMES = {
     [2621] = "Subtlety",
     [2938] = "+20 Spell Penetration",
     [2662] = "+120 Armor",
-    [2648] = "+12 Defense Rating",
     [2664] = "+7 All Resistances",
     [1257] = "+15 Arcane Resistance",
     [1441] = "+15 Shadow Resistance",
@@ -1192,7 +1192,6 @@ B.ENCHANT_NAMES = {
     [256]  = "+5 Strength",
     [15]   = "+1 All Resistances",
     [66]   = "+3 Stamina",
-    [247]  = "+70 Armor",
     [843]  = "+3 Spirit",
     [847]  = "+1 All Stats",
     [848]  = "+3 All Stats",
@@ -1209,20 +1208,16 @@ B.ENCHANT_NAMES = {
     [913]  = "+9 Strength",
     [929]  = "+2% Threat",
     [931]  = "+5 Fire Resistance",
-    [2523] = "+30 Hit Rating",
     [2543] = "+7 Agility",
     [2545] = "+7 Intellect",
     [2603] = "+100 Attack Power vs Undead",
-    [2616] = "+20 Agility",
-    [2619] = "+30 Attack Power",
-    [2620] = "+15 Spell Damage / +14 Spell Crit",
+    [2616] = "+20 Fire Spell Damage",
+    [2619] = "+15 Fire Resistance",
+    [2620] = "+15 Nature Resistance",
     [2622] = "+12 Dodge Rating",
 
     -- Additional commonly seen enchants
     [2660] = "+150 Mana",
-    [2679] = "+6 Mana per 5 sec",
-    [3273] = "Deathfrost",
-    [3223] = "Adamantite Weapon Chain",
     [1883] = "+100 Health",
     [1884] = "+7 All Stats (Legacy)",
     [1885] = "+9 Intellect",
@@ -1232,17 +1227,9 @@ B.ENCHANT_NAMES = {
     [1890] = "+9 Agility",
     [1892] = "+3 All Stats",
     [1893] = "+5 All Stats",
-    [1895] = "Icy Chill",
-    [1896] = "+9 Weapon Damage",
-    [1897] = "+5 Weapon Damage",
-    [1898] = "Fiery Weapon",
-    [1899] = "Icy Chill",
     [1901] = "Minor Haste (1%)",
-    [1903] = "Lifestealing",
     [1904] = "+15 Agility",
-    [2523] = "+30 Hit Rating (Scope)",
     [2646] = "+25 Agility (2H)",
-    [2647] = "+12 Strength",
     [2663] = "+18 Spell Damage",
     [2665] = "+12 Resilience (Chest)",
     [2681] = "+6 All Stats",
@@ -1252,18 +1239,10 @@ B.ENCHANT_NAMES = {
     [2685] = "+15 Frost Resistance",
     -- [2721] removed — was incorrectly mapped; 2721 = Power of the Scourge (Naxx shoulder), Khorium Scope is 2723
     [2722] = "+10 Damage (Scope)",
-    [2928] = "+12 Spell Damage (Ring)",
-    [2929] = "+2 Weapon Damage (Ring)",
-    [2930] = "+20 Healing (Ring)",
-    [2931] = "+4 All Stats (Ring)",
     [2932] = "+12 Healing",
     [2936] = "+15 Spell Hit",
     [2945] = "+3% Haste",
     [2946] = "+12 Crit Rating",
-    [3150] = "+6 Mana per 5 sec (Chest)",
-    [3222] = "+20 Agility",
-    [3225] = "Executioner",
-    [3229] = "+12 Resilience (Shield)",
     [3231] = "+15 Haste Rating",
     [3232] = "+20 Hit Rating",
     [3233] = "+24 Spell Damage",
